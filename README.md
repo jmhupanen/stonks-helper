@@ -4,10 +4,21 @@ A trading journal for tracking and planning your trades. Frontend implementation
 
 ## Requirements
 
-Node.js
-
+Node.js dependencies
 ```
 npm install
+cd client
+npm install
+```
+
+## Env variables
+
+Create a 'config.env' file in the config directory with the following contents
+```
+NODE_ENV = development
+PORT = 5000
+MONGO_URI = <your mongodb uri>
+JWT_SECRET = 'abc123'
 ```
 
 ## How to run
