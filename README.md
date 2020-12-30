@@ -13,7 +13,7 @@ npm install
 
 ## Env variables
 
-Create a 'config.env' file in the config directory with the following contents
+Create a 'config.env' file in the 'config' directory with the following contents
 ```
 NODE_ENV = development
 PORT = 5000

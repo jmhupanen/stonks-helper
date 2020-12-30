@@ -26,30 +26,53 @@ exports.addTrade = asyncHandler(async (req, res) => {
         name,
         entryDate,
         notes,
-    })
+    });
   
-    const createdTrade = await trade.save()
+    const createdTrade = await trade.save();
 
-    res.status(201).json(createdTrade)
+    res.status(201).json(createdTrade);
 })
 
 // @desc    Update trade
 // @route   PUT /api/trades/:id
 // @access  Private
 exports.updateTrade = asyncHandler(async (req, res) => {
-    const trade = await Trade.findById(req.params.id)
+    const {
+        entry,
+        exit,
+        quantityBght,
+        quantitySld,
+        positionType,
+        leverage,
+        underlSecEntr,
+        underlSecExt,
+        name,
+        entryDate,
+        exitDate,
+        notes,
+    } = req.body;
+    
+    const trade = await Trade.findById(req.params.id);
 
     if (trade) {
-        // TODO
+        trade.entry = entry
+        trade.exit = exit
+        trade.quantityBght = quantityBght
+        trade.quantitySld = quantitySld
+        trade.positionType = positionType
+        trade.leverage = leverage
+        trade.underlSecEntr = underlSecEntr
+        trade.underlSecExt = underlSecExt
+        trade.name = name
+        trade.entryDate = entryDate
+        trade.exitDate = exitDate
+        trade.notes = notes
 
-        const updatedTrade = await trade.save()
-
-        res.json({
-            // TODO
-        })
+        const updatedTrade = await trade.save();
+        res.json(updatedTrade)
     } else {
         res.status(404)
-        throw new Error('Trade not found')
+        throw new Error('Trade not found');
     }
 })
 
@@ -60,11 +83,11 @@ exports.deleteTrade = asyncHandler(async (req, res) => {
     const trade = await Trade.findById(req.params.id)
 
     if (trade) {
-        await trade.remove()
-        res.json({ message: 'Trade removed' })
+        await trade.remove();
+        res.json({ message: 'Trade removed' });
     } else {
-        res.status(404)
-        throw new Error('Trade not found')
+        res.status(404);
+        throw new Error('Trade not found');
     }
 })
 
@@ -78,10 +101,10 @@ exports.getTradeById = asyncHandler(async (req, res) => {
     )
 
     if (trade) {
-        res.json(trade)
+        res.json(trade);
     } else {
         res.status(404)
-        throw new Error('Trade not found')
+        throw new Error('Trade not found');
     }
 })
 
@@ -89,14 +112,14 @@ exports.getTradeById = asyncHandler(async (req, res) => {
 // @route   GET /api/trades/mytrades
 // @access  Private
 exports.getMyTrades = asyncHandler(async (req, res) => {
-    const trades = await Trade.find({ user: req.user._id })
-    res.json(trades)
+    const trades = await Trade.find({ user: req.user._id });
+    res.json(trades);
 })
 
 // @desc    Get all trades
 // @route   GET /api/trades
 // @access  Private/Admin
 exports.getTrades = asyncHandler(async(req, res) => {
-    const trades = await Trade.find({}).populate('user', 'id name')
-    res.json(trades)
+    const trades = await Trade.find({}).populate('user', 'id name');
+    res.json(trades);
 })
