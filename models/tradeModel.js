@@ -18,7 +18,20 @@ const TradeSchema = new mongoose.Schema({
         required: true
     },
     quantitySld: {
-        type: Number
+        type: Number,
+        default: 0
+    },
+    profitLoss: {
+        type: Number,
+        default: function() {
+            return exit * quantityBght - entry * quantitySld
+        }
+    },
+    profitLossPct: {
+        type: Number,
+        default: function() {
+            return (exit * quantityBght - entry * quantitySld) / (entry * quantitySld)
+        }
     },
     positionType: {
         type: String,
@@ -34,6 +47,20 @@ const TradeSchema = new mongoose.Schema({
     },
     underlSecExt: {
         type: Number
+    },
+    stopLoss: {
+        type: Number,
+        max: 0.9999 * entry
+    },
+    takeProfit: {
+        type: Number,
+        min: 1.0001 * entry
+    },
+    riskReward: {
+        type: Number,
+        default: function() {
+            return (takeProfit - entry) / (entry - stopLoss)
+        }
     },
     name: {
         type: String,

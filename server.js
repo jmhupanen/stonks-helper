@@ -2,8 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
-const { notFound, errorHandler } = require('./middleware/errorMiddleware')
-const connectDB = require('./config/db')
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const connectDB = require('./config/db');
 
 const trades = require('./routes/tradeRoutes');
 const users = require('./routes/userRoutes');

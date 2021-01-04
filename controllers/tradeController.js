@@ -11,6 +11,8 @@ exports.addTrade = asyncHandler(async (req, res) => {
         positionType,
         leverage,
         underlSecEntr,
+        stopLoss,
+        takeProfit,
         name,
         entryDate,
         notes,
@@ -23,6 +25,8 @@ exports.addTrade = asyncHandler(async (req, res) => {
         positionType,
         leverage,
         underlSecEntr,
+        stopLoss,
+        takeProfit,
         name,
         entryDate,
         notes,
@@ -46,6 +50,8 @@ exports.updateTrade = asyncHandler(async (req, res) => {
         leverage,
         underlSecEntr,
         underlSecExt,
+        stopLoss,
+        takeProfit,
         name,
         entryDate,
         exitDate,
@@ -63,6 +69,8 @@ exports.updateTrade = asyncHandler(async (req, res) => {
         trade.leverage = leverage
         trade.underlSecEntr = underlSecEntr
         trade.underlSecExt = underlSecExt
+        trade.stopLoss = stopLoss
+        trade.takeProfit = takeProfit
         trade.name = name
         trade.entryDate = entryDate
         trade.exitDate = exitDate
