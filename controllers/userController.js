@@ -2,10 +2,24 @@ const asyncHandler = require('express-async-handler');
 const generateToken = require('../utils/generateToken');
 const User = require('../models/userModel');
 
+// @desc    Get logged in user
+// @route   POST /api/users/auth
+// @access  Private
+exports.authUser = asyncHandler(async (req, res) => {
+    const user = await (await User.findById(req.user.id)).select('-password');
+  
+    if (user && (await user.matchPassword(password))) {
+        res.json(user);
+    } else {
+        res.status(401);
+        throw new Error('Invalid email or password');
+    }
+})
+
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
-exports.authUser = asyncHandler(async (req, res) => {
+exports.loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
   
     const user = await User.findOne({ email });

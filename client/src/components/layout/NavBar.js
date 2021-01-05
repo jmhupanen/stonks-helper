@@ -142,7 +142,7 @@ function NavBar() {
 
         <List>
           <ListItem button component={Link} 
-            to={'/'} 
+            to={'/tradelog'} 
             onClick={handleDrawerClose}
           >
             <ListItemIcon><ListAltIcon /></ListItemIcon>

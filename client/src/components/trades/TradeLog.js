@@ -19,7 +19,7 @@ function TradeLog() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
+      <Grid container>
         <Grid container justify="center">
           <Typography variant="h4" gutterBottom>Trade Log</Typography>
         </Grid>
