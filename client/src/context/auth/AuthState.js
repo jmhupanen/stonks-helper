@@ -13,17 +13,17 @@ import {
   CLEAR_ERRORS
 } from '../types'
 
-const initialState = {
-  token: localStorage.getItem('token'),
-  isAuthenticated: null,
-  loading: true,
-  user: null,
-  error: null
-}
+export const AuthContext = createContext()
 
-export const AuthContext = createContext(initialState)
-
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = props => {
+  const initialState = {
+    token: localStorage.getItem('token'),
+    isAuthenticated: null,
+    loading: true,
+    user: null,
+    error: null
+  }
+  
   const [state, dispatch] = useReducer(authReducer, initialState)
 
   // Load User
@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
         clearErrors
       }}
     >
-      {children}
+      {props.children}
     </AuthContext.Provider>
   )
 }

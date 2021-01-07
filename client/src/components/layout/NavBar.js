@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -18,7 +18,10 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { CssBaseline } from '@material-ui/core';
+import { AuthContext } from '../../context/auth/AuthState';
 
 const drawerWidth = 240;
 
@@ -82,9 +85,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavBar() {
-  const classes = useStyles()
-  const theme = useTheme()
-  const [open, setOpen] = useState(false)
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const authContext = useContext(AuthContext);
+
+  const {isAuthenticated, logout, user, loadUser } = authContext;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -93,7 +99,68 @@ function NavBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
+
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
+
+  const onLogout = () => {
+    logout();
+  };
+
+  const authLinks = (
+    <Fragment>
+      <ListItem button component={Link} 
+        to={'/tradelog'} 
+        onClick={handleDrawerClose}
+      >
+        <ListItemIcon><ListAltIcon /></ListItemIcon>
+        <ListItemText primary='Trade Log' />
+      </ListItem>
+      <ListItem button component={Link} 
+        to={'/dashboard'} 
+        onClick={handleDrawerClose}
+      >
+        <ListItemIcon><ShowChartIcon /></ListItemIcon>
+        <ListItemText primary='Dashboard' />
+      </ListItem>
+      <ListItem button component={Link} 
+        to={'/analytics'} 
+        onClick={handleDrawerClose}
+      >
+        <ListItemIcon><EqualizerIcon /></ListItemIcon>
+        <ListItemText primary='Analytics' />
+      </ListItem>
+      <ListItem button component={Link} 
+        to={'/settings'} 
+        onClick={handleDrawerClose}
+      >
+        <ListItemIcon><SettingsIcon /></ListItemIcon>
+        <ListItemText primary='Settings' />
+      </ListItem>
+      <ListItem button component={Link}
+        onClick={onLogout} 
+        to={'/login'} 
+      >
+        <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+        <ListItemText primary='Log out' />
+      </ListItem>
+    </Fragment>
+  )
+
+  const guestLinks = (
+    <Fragment>
+      <ListItem button component={Link} 
+        to={'login'} 
+        onClick={handleDrawerClose}
+      >
+        <ListItemIcon><AccountCircleIcon /></ListItemIcon>
+        <ListItemText primary='Log in' />
+      </ListItem>
+    </Fragment>
+  )
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -139,40 +206,12 @@ function NavBar() {
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
-
         <List>
-          <ListItem button component={Link} 
-            to={'/tradelog'} 
-            onClick={handleDrawerClose}
-          >
-            <ListItemIcon><ListAltIcon /></ListItemIcon>
-            <ListItemText primary='Trade Log' />
-          </ListItem>
-          <ListItem button component={Link} 
-            to={'/dashboard'} 
-            onClick={handleDrawerClose}
-          >
-            <ListItemIcon><ShowChartIcon /></ListItemIcon>
-            <ListItemText primary='Dashboard' />
-          </ListItem>
-          <ListItem button component={Link} 
-            to={'/analytics'} 
-            onClick={handleDrawerClose}
-          >
-            <ListItemIcon><EqualizerIcon /></ListItemIcon>
-            <ListItemText primary='Analytics' />
-          </ListItem>
-          <ListItem button component={Link} 
-            to={'/settings'} 
-            onClick={handleDrawerClose}
-          >
-            <ListItemIcon><SettingsIcon /></ListItemIcon>
-            <ListItemText primary='Settings' />
-          </ListItem>
+          {isAuthenticated ? authLinks : guestLinks}
         </List>
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

@@ -1,40 +1,30 @@
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
-const User = require('../models/userModel');
 
 exports.protect = asyncHandler(async (req, res, next) => {
-    let token;
-  
-    if (
-        req.headers.authorization &&
-        req.headers.authorization.startsWith('Bearer')
-    ) {
-      try {
-        token = req.headers.authorization.split(' ')[1];
+  // Get token from header
+  const token = req.header('x-auth-token');
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  // Check if not token
+  if (!token) {
+    return res.status(401).json({ msg: 'No token, authorization denied' });
+  }
 
-        req.user = await User.findById(decoded.id).select('-password');
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        next();
-      } catch (error) {
-        console.error(error);
-        res.status(401);
-        throw new Error('Not authorized, token failed');
-      }
-    }
-  
-    if (!token) {
-        res.status(401);
-        throw new Error('Not authorized, no token');
-    }
-})
+    req.user = decoded.user;
+    next();
+  } catch (err) {
+    res.status(401).json({ msg: 'Token is not valid' });
+  }
+});
   
 exports.admin = (req, res, next) => {
-    if (req.user && req.user.isAdmin) {
-        next();
-    } else {
-        res.status(401);
-        throw new Error('Not authorized as an admin');
-    }
-}
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error('Not authorized as an admin');
+  }
+};
