@@ -8,6 +8,7 @@ const TradeSchema = new mongoose.Schema({
   },
   entry: {
     type: Number,
+    min: 0.0001,
     required: true
   },
   exit: {
@@ -15,10 +16,12 @@ const TradeSchema = new mongoose.Schema({
   },
   quantityBght: {
     type: Number,
+    min: 1,
     required: true
   },
   quantitySld: {
     type: Number,
+    max: this.quantityBght,
     default: 0
   },
   profitLoss: {

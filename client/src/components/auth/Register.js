@@ -111,12 +111,12 @@ const Register = () => {
             />
           </Grid>
           <Grid container justify="center">
-          <Typography variant="body1" gutterBottom>
-            Already have an account? &nbsp;
-            <Link href="/login">
-              Log in
-            </Link>
-          </Typography>
+            <Typography variant="body1" gutterBottom>
+              Already have an account? &nbsp;
+              <Link href="/login">
+                Log in
+              </Link>
+            </Typography>
           </Grid>
           <br />
           <Grid container justify="center">

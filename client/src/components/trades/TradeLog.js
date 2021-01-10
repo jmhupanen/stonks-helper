@@ -1,5 +1,5 @@
 import React from 'react'
-import AddTrade from './AddTrade'
+import AddTrade from './TradeForm'
 import TradeList from './TradeList'
 import { Typography, Grid, makeStyles } from '@material-ui/core'
 
@@ -19,7 +19,7 @@ function TradeLog() {
 
   return (
     <div className={classes.root}>
-      <Grid container>
+      <Grid container justify="center">
         <Grid container justify="center">
           <Typography variant="h4" gutterBottom>Trade Log</Typography>
         </Grid>

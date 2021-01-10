@@ -1,3 +1,13 @@
+export const GET_TRADES = 'GET_TRADES';
+export const ADD_TRADE = 'ADD_TRADE';
+export const DELETE_TRADE = 'DELETE_TRADE';
+export const SET_CURRENT = 'SET_CURRENT';
+export const CLEAR_CURRENT = 'CLEAR_CURRENT';
+export const UPDATE_TRADE = 'UPDATE_TRADE';
+export const FILTER_TRADES = 'FILTER_TRADES';
+export const CLEAR_TRADES = 'CLEAR_TRADES';
+export const CLEAR_FILTER = 'CLEAR_FILTER';
+export const TRADE_ERROR = 'TRADE_ERROR';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const USER_LOADED = 'USER_LOADED';

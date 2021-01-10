@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     background: '#000000', 
+    color: 'white',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -177,7 +178,6 @@ function NavBar() {
             className={clsx(classes.menuButton, {
               [classes.hide]: open,
             })} 
-            color="inherit" 
             aria-label="open drawer"
           >
             <MenuIcon />
