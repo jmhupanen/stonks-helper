@@ -51,6 +51,9 @@ const TradeSchema = new mongoose.Schema({
   underlSecExt: {
     type: Number
   },
+  strikePrice: {
+    type: Number
+  },
   stopLoss: {
     type: Number,
     max: 0.9999 * this.entry
